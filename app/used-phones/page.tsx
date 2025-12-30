@@ -26,14 +26,10 @@ interface UsedPhone {
 
 /* SERVER COMPONENT */
 export default async function UsedPhonesPage() {
-const hdrs = await headers()
-const host = hdrs.get("host")
-
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
-
-const res = await fetch(`${protocol}://${host}/api/phones`, {
+const res = await fetch("/api/phones", {
   cache: "no-store",
 })
+
 
 if (!res.ok) {
   console.error("Failed to fetch phones")
