@@ -26,7 +26,18 @@ interface UsedPhone {
 
 /* SERVER COMPONENT */
 export default async function UsedPhonesPage() {
-const res = await fetch("/api/phones", {
+
+
+const hdrs = await headers()
+const host = hdrs.get("host")
+
+if (!host) {
+  throw new Error("Host not found in headers")
+}
+
+const protocol = hdrs.get("x-forwarded-proto") ?? "https"
+
+const res = await fetch(`${protocol}://${host}/api/phones`, {
   cache: "no-store",
 })
 
