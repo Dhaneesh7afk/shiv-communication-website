@@ -36,8 +36,9 @@ export default function ContactPage() {
                   content: "Shiv Communication, Sangatpura Chowk, Mandi Gobindgarh, Punjab, India",
                   action: {
                     label: "Get Directions",
-                    href: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.49205594808936!2d76.28087061047621!3d30.6657074894138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39101b392061f159%3A0xdcf55c53b5ec2b67!2sShiv%20Communication!5e0!3m2!1sen!2sin!4v1766686510137!5m2!1sen!2sin",
+                    href: "https://www.google.com/maps/dir/?api=1&destination=30.6657074894138,76.28087061047621",
                   },
+
                 },
                 {
                   icon: Clock,
@@ -132,7 +133,7 @@ export default function ContactPage() {
 
           <div className="h-[400px] md:h-[600px] lg:h-full w-full overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] border bg-muted grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl shadow-primary/5">
             <iframe
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.49205594808936!2d76.28087061047621!3d30.6657074894138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39101b392061f159%3A0xdcf55c53b5ec2b67!2sShiv%20Communication!5e0!3m2!1sen!2sin!4v1766686510137!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.49205594808936!2d76.28087061047621!3d30.6657074894138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39101b392061f159%3A0xdcf55c53b5ec2b67!2sShiv%20Communication!5e0!3m2!1sen!2sin!4v1766686510137!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0 }}
