@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { connectDB } from "@/lib/db"
 import User from "@/models/User"
-import { admin } from "@/lib/firebaseAdmin"
+import { admin, firebaseConfigured } from "@/lib/firebaseAdmin"
 import mongoose from "mongoose"
 
 export const authOptions: NextAuthOptions = {
@@ -19,6 +19,10 @@ export const authOptions: NextAuthOptions = {
         idToken: { label: "Firebase ID Token", type: "text" },
       },
       async authorize(credentials) {
+        if (!firebaseConfigured) {
+          console.warn("Firebase Admin not configured. Phone auth is disabled.")
+          return null
+        }
         if (!credentials?.idToken) return null
         const decoded = await admin.auth().verifyIdToken(credentials.idToken)
         if (!decoded.phone_number) return null
