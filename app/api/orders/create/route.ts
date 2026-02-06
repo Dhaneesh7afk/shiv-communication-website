@@ -1,15 +1,10 @@
-import Razorpay from "razorpay"
 import { NextResponse } from "next/server"
 import { connectDB } from "@/lib/db"
 import Order from "@/models/Order"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import User from "@/models/User"
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
+import { getRazorpay } from "@/lib/razorpay"
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +28,11 @@ export async function POST(req: Request) {
       (sum: number, i: any) => sum + i.price * i.quantity,
       0
     )
+
+    const razorpay = getRazorpay()
+    if (!razorpay) {
+      return NextResponse.json({ error: "Razorpay not configured" }, { status: 503 })
+    }
 
     // 1️⃣ Create Razorpay order
     const razorpayOrder = await razorpay.orders.create({

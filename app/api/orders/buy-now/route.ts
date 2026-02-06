@@ -5,12 +5,7 @@ import { connectDB } from "@/lib/db"
 import Order from "@/models/Order"
 import Product from "@/models/Product"
 import User from "@/models/User"
-import Razorpay from "razorpay"
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
+import { getRazorpay } from "@/lib/razorpay"
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
@@ -37,6 +32,11 @@ export async function POST(req: Request) {
 
   if (!product) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 })
+  }
+
+  const razorpay = getRazorpay()
+  if (!razorpay) {
+    return NextResponse.json({ error: "Razorpay not configured" }, { status: 503 })
   }
 
   const razorpayOrder = await razorpay.orders.create({

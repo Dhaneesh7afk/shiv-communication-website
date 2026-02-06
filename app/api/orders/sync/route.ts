@@ -1,14 +1,9 @@
-import Razorpay from "razorpay"
 import { NextResponse } from "next/server"
 import { connectDB } from "@/lib/db"
 import Order from "@/models/Order"
 import { requireAdmin } from "@/lib/adminAuth"
 import { canTransition } from "@/lib/order-status"
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
+import { getRazorpay } from "@/lib/razorpay"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -33,6 +28,11 @@ export async function POST(req: Request) {
   const isAdmin = await requireAdmin()
   if (!isAdmin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  const razorpay = getRazorpay()
+  if (!razorpay) {
+    return NextResponse.json({ error: "Razorpay not configured" }, { status: 503 })
   }
 
   const { orderIds } = await req.json()
