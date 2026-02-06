@@ -1,7 +1,14 @@
 import type { Metadata } from "next"
-import { Monitor, Cpu, ShieldCheck, Wrench, Phone } from "lucide-react"
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google"
+import {
+  ArrowRight,
+  CheckCircle2,
+  Cpu,
+  Monitor,
+  ShieldCheck,
+  Wrench,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export const metadata: Metadata = {
@@ -10,148 +17,228 @@ export const metadata: Metadata = {
     "Expert computer services in Mandi Gobindgarh. Windows installation, software setup, virus removal, and computer accessories. Reliable IT support for home and office.",
 }
 
+const displayFont = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+})
+
+const bodyFont = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+})
+
 const computerServices = [
-  { service: "Windows Installation", price: "₹499 – ₹999" },
-  { service: "Software Installation", price: "₹199 – ₹499" },
-  { service: "Virus / Malware Removal", price: "₹299 – ₹699" },
+  { service: "Windows Installation", price: "₹499 - ₹999" },
+  { service: "Software Installation", price: "₹199 - ₹499" },
+  { service: "Virus / Malware Removal", price: "₹299 - ₹699" },
   { service: "SSD / RAM Upgrade", price: "Starts ₹300 + Parts" },
   { service: "General Servicing & Cleanup", price: "₹299" },
 ]
 
 export default function ComputerServicesPage() {
+  const headingFont = { fontFamily: "var(--font-display)" }
+
   return (
-    <div className="py-16 md:py-24 lg:py-32">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-16 md:mb-24 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center rounded-full border bg-muted/50 px-4 py-1.5 mb-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-            IT Solutions
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
-            Computer <br />
-            <span className="text-muted-foreground/30">Care.</span>
-          </h1>
-          <p className="mt-6 md:mt-8 text-base md:text-lg text-muted-foreground font-medium max-w-xl mx-auto leading-relaxed">
-            Professional IT support and hardware services for desktops and laptops in Mandi Gobindgarh.
-          </p>
+    <div className={`${displayFont.variable} ${bodyFont.variable} min-h-screen`} style={{ fontFamily: "var(--font-body)" }}>
+      <section className="relative overflow-hidden pt-16 pb-16 md:pt-24 md:pb-24">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute -top-32 left-1/2 h-[520px] w-[980px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.14),transparent_60%)] blur-2xl" />
+          <div className="absolute bottom-0 right-0 h-[420px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.12),transparent_55%)] blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(15,23,42,0.04),transparent_45%,rgba(16,185,129,0.06))]" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-16">
-          <div className="lg:col-span-2 space-y-12 md:space-y-16">
-            <Card className="border-none shadow-none bg-secondary/30 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden">
-              <CardHeader className="p-8 md:p-12 pb-0">
-                <CardTitle className="flex items-center gap-4 text-xl md:text-2xl font-black uppercase tracking-tighter">
-                  <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center">
-                    <Monitor className="h-5 w-5 md:h-6 md:w-6" />
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground shadow-sm">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                IT Support Desk
+              </div>
+              <h1 className="mt-6 text-4xl font-black tracking-tight text-foreground md:text-6xl lg:text-7xl" style={headingFont}>
+                Computer service,
+                <span className="block text-emerald-600">done right</span>
+              </h1>
+              <p className="mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
+                From OS installs to hardware upgrades, we keep your laptop or desktop running like new with clear
+                timelines and transparent pricing.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button size="lg" className="h-14 rounded-full px-8 text-xs font-semibold uppercase tracking-[0.2em]" asChild>
+                  <a href="tel:9878157109">
+                    Call for Support
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-14 rounded-full px-8 text-xs font-semibold uppercase tracking-[0.2em]"
+                  asChild
+                >
+                  <a href="https://wa.me/919878157109" target="_blank" rel="noopener noreferrer">
+                    WhatsApp Help
+                  </a>
+                </Button>
+              </div>
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {[
+                  { title: "Same-day fixes", desc: "Quick diagnostics with clear timelines." },
+                  { title: "Secure backups", desc: "Data handled with care." },
+                  { title: "Upgrade options", desc: "SSD + RAM improvements." },
+                ].map((item) => (
+                  <div key={item.title} className="rounded-2xl border border-border/60 bg-background/70 p-4 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">{item.title}</p>
+                    <p className="mt-2 text-sm text-foreground/80">{item.desc}</p>
                   </div>
-                  Service Pricing
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-8 md:p-12">
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="rounded-[2.75rem] border border-border/60 bg-gradient-to-br from-background/90 via-background/70 to-secondary/60 p-6 shadow-[0_24px_90px_-60px_rgba(15,23,42,0.6)] md:p-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Service highlights</p>
+                    <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl" style={headingFont}>
+                      Everything your computer needs
+                    </h2>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                    <Monitor className="h-6 w-6" />
+                  </div>
+                </div>
+                <div className="mt-6 space-y-4">
+                  {[
+                    { title: "OS & software setup", desc: "Windows installs and productivity tools." },
+                    { title: "Hardware upgrades", desc: "SSD, RAM, and component refresh." },
+                    { title: "Maintenance & cleanup", desc: "Performance tuning and safety checks." },
+                  ].map((item) => (
+                    <div key={item.title} className="flex gap-3 rounded-2xl border border-border/60 bg-background/80 p-4">
+                      <div className="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                        <p className="text-xs text-muted-foreground">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-16 md:pb-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              { icon: Cpu, title: "Hardware upgrades", desc: "Get your device running fast again." },
+              { icon: ShieldCheck, title: "Data protection", desc: "Safe installations and backups." },
+              { icon: Wrench, title: "Business support", desc: "Ongoing maintenance for offices." },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-[2.5rem] border border-border/60 bg-background/80 p-8 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                  <item.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground" style={headingFont}>
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-24 md:pb-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[2.75rem] border border-border/60 bg-background/80 p-8 shadow-sm md:p-10">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                  <Monitor className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Pricing guide</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl" style={headingFont}>
+                    Core computer services
+                  </h2>
+                </div>
+              </div>
+              <div className="mt-6">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-muted/50">
-                      <TableHead className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                    <TableRow className="border-border/60">
+                      <TableHead className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                         Service
                       </TableHead>
-                      <TableHead className="text-right text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                      <TableHead className="text-right text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                         Price
                       </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {computerServices.map((item) => (
-                      <TableRow key={item.service} className="border-muted/30">
-                        <TableCell className="py-4 font-bold text-sm md:text-base uppercase tracking-tight">
-                          {item.service}
+                      <TableRow key={item.service} className="border-border/40">
+                        <TableCell className="py-4 text-sm font-semibold text-foreground">{item.service}</TableCell>
+                        <TableCell className="py-4 text-right text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+                          {item.price}
                         </TableCell>
-                        <TableCell className="text-right py-4 font-black text-primary">{item.price}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {[
-                {
-                  icon: Cpu,
-                  title: "Hardware Upgrades",
-                  desc: "Make your old laptop or desktop fast again with SSD and RAM upgrades.",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "Data Protection",
-                  desc: "Safe OS installations and data backup services for your peace of mind.",
-                },
-              ].map((item, i) => (
-                <Card
-                  key={i}
-                  className="bg-secondary/20 border-none rounded-[2rem] p-6 md:p-8 group hover:bg-secondary transition-all"
-                >
-                  <CardContent className="p-0">
-                    <div className="flex gap-4 md:gap-6 items-start">
-                      <div className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-muted group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                        <item.icon className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-black uppercase tracking-tight text-sm md:text-base mb-2">{item.title}</h3>
-                        <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed">
-                          {item.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-6 md:space-y-8 lg:sticky lg:top-32">
-            <Card className="bg-primary text-primary-foreground border-none rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-primary/20 overflow-hidden relative">
-              <div className="absolute bottom-0 right-0 translate-y-1/4 translate-x-1/4 h-48 w-48 rounded-full bg-white/5 blur-2xl" />
-              <CardContent className="p-8 md:p-10 relative z-10">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 mb-6">
-                  <Wrench className="h-6 w-6" />
-                </div>
-                <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none mb-4">
-                  Desktop <br />
-                  <span className="opacity-40">Add-ons.</span>
-                </h3>
-                <p className="text-sm font-medium opacity-70 mb-8 leading-relaxed">
-                  We stock keyboards, mice, speakers, headsets, and various computer cables at great prices.
+                <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  Pricing varies by device and workload.
                 </p>
+              </div>
+            </div>
+
+            <div className="rounded-[2.75rem] border border-border/60 bg-gradient-to-br from-background via-background to-secondary/60 p-8 shadow-sm md:p-10">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Accessory desk</p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground" style={headingFont}>
+                Computer essentials in stock
+              </h3>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Keyboards, mice, speakers, headsets, and cables available for quick pickup.
+              </p>
+              <div className="mt-6 space-y-3">
+                {[
+                  "Genuine accessories and warranties",
+                  "Same-day pickup in store",
+                  "Guided recommendations",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3 text-sm text-foreground/80">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-col gap-3">
+                <Button className="h-12 rounded-full text-xs font-semibold uppercase tracking-[0.2em]" asChild>
+                  <a href="tel:9878157109">Call for Stock</a>
+                </Button>
                 <Button
-                  className="w-full h-12 md:h-14 rounded-full bg-background text-primary hover:bg-background/90 font-black uppercase tracking-widest text-xs"
+                  variant="outline"
+                  className="h-12 rounded-full text-xs font-semibold uppercase tracking-[0.2em]"
                   asChild
                 >
-                  <a href="tel:9878157109">
-                    <Phone className="mr-2 h-4 w-4" />
-                    Call for Stock
+                  <a href="https://wa.me/919878157109" target="_blank" rel="noopener noreferrer">
+                    WhatsApp Inquiry
                   </a>
                 </Button>
-              </CardContent>
-            </Card>
-            <Card className="border-none shadow-none bg-secondary/10 rounded-[2rem] p-8">
-              <CardHeader className="p-0 mb-6">
-                <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary/40">
-                  Lab Capability
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 space-y-4">
-                <div className="flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-tight">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
-                  Custom Gaming PC Builds
-                </div>
-                <div className="flex items-center gap-3 text-xs md:text-sm font-bold uppercase tracking-tight">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
-                  Annual Maintenance (AMC)
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

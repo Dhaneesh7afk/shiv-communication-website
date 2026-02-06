@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import { Package, Smartphone, Headset, Zap, Phone, MessageSquare } from "lucide-react"
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google"
+import { ArrowRight, Headphones, Package, ShieldCheck, Smartphone, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "Mobile Accessories Shop in Mandi Gobindgarh | Shiv Communication",
@@ -9,100 +9,181 @@ export const metadata: Metadata = {
     "Premium mobile back covers, tempered glass, fast chargers, and earphones in Mandi Gobindgarh. Quality mobile accessories starting from ₹99 at Shiv Communication.",
 }
 
+const displayFont = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+})
+
+const bodyFont = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+})
+
 const categories = [
-  { name: "Back Covers", price: "Starts ₹99", icon: Package, desc: "Stylish & rugged protection" },
+  { name: "Back Covers", price: "Starts ₹99", icon: Package, desc: "Stylish and rugged protection" },
   { name: "Tempered Glass", price: "Starts ₹99", icon: Smartphone, desc: "Premium screen protection" },
-  { name: "Fast Chargers", price: "Starts ₹299", icon: Zap, desc: "Original & high-quality cables" },
-  { name: "Earphones", price: "Starts ₹149", icon: Headset, desc: "Wired & wireless audio" },
+  { name: "Fast Chargers", price: "Starts ₹299", icon: Zap, desc: "Verified cables and adapters" },
+  { name: "Audio", price: "Starts ₹149", icon: Headphones, desc: "Wired and wireless audio" },
 ]
 
 export default function AccessoriesPage() {
+  const headingFont = { fontFamily: "var(--font-display)" }
+
   return (
-    <div className="py-16 md:py-24 lg:py-32">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-16 md:mb-24 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center rounded-full border bg-muted/50 px-4 py-1.5 mb-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-            Stock Catalog
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
-            Premium <br />
-            <span className="text-muted-foreground/30">Gear.</span>
-          </h1>
-          <p className="mt-6 md:mt-8 text-base md:text-lg text-muted-foreground font-medium max-w-xl mx-auto leading-relaxed">
-            Complete protection and premium audio for your smartphone at the best prices in Mandi Gobindgarh.
-          </p>
+    <div className={`${displayFont.variable} ${bodyFont.variable} min-h-screen`} style={{ fontFamily: "var(--font-body)" }}>
+      <section className="relative overflow-hidden pt-16 pb-16 md:pt-24 md:pb-24">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute -top-32 left-1/2 h-[520px] w-[980px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.16),transparent_60%)] blur-2xl" />
+          <div className="absolute bottom-0 right-0 h-[420px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.12),transparent_55%)] blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(15,23,42,0.04),transparent_45%,rgba(14,165,233,0.06))]" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-20 md:mb-32">
-          {categories.map((cat) => (
-            <Card
-              key={cat.name}
-              className="overflow-hidden border-none shadow-none bg-secondary/30 rounded-[2rem] group hover:bg-secondary transition-all duration-500"
-            >
-              <CardContent className="p-8 md:p-10 text-center">
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-primary/20">
-                  <cat.icon className="h-7 w-7" />
-                </div>
-                <h3 className="font-black uppercase tracking-tight text-lg md:text-xl mb-2">{cat.name}</h3>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-6">
-                  {cat.desc}
-                </p>
-                <div className="inline-block px-6 py-2 rounded-full bg-primary text-primary-foreground font-black uppercase tracking-widest text-[10px]">
-                  {cat.price}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="bg-primary text-primary-foreground rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:p-16 lg:p-24 overflow-hidden relative group">
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 h-[500px] w-[500px] rounded-full bg-white/5 blur-3xl transition-transform duration-1000 group-hover:scale-110" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center relative z-10">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter uppercase leading-none mb-8">
-                Latest <br />
-                <span className="opacity-30">Inventory.</span>
-              </h2>
-              <p className="mb-10 opacity-70 text-base md:text-lg font-medium leading-relaxed max-w-lg">
-                We regularly update our stock with the latest back covers and audio tech. Visit our store to see the
-                full monochrome collection.
+              <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground shadow-sm">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                Accessory Desk
+              </div>
+              <h1 className="mt-6 text-4xl font-black tracking-tight text-foreground md:text-6xl lg:text-7xl" style={headingFont}>
+                Everyday add-ons,
+                <span className="block text-emerald-600">picked by experts</span>
+              </h1>
+              <p className="mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
+                From screen protection to fast chargers, we test fit and performance in store so you get the right
+                accessory the first time.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="h-14 px-10 rounded-full bg-background text-primary hover:bg-background/90 font-black uppercase tracking-widest text-xs"
-                  asChild
-                >
-                  <a href="tel:9878157109">
-                    <Phone className="mr-2 h-4 w-4" />
-                    Call for Stock
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button size="lg" className="h-14 rounded-full px-8 text-xs font-semibold uppercase tracking-[0.2em]" asChild>
+                  <a href="/shop">
+                    Browse Catalog
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
                 <Button
                   size="lg"
-                  className="h-14 px-10 rounded-full bg-[#25D366] hover:bg-[#128C7E] text-white border-none font-black uppercase tracking-widest text-xs"
+                  variant="outline"
+                  className="h-14 rounded-full px-8 text-xs font-semibold uppercase tracking-[0.2em]"
                   asChild
                 >
                   <a href="https://wa.me/919878157109" target="_blank" rel="noopener noreferrer">
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    WhatsApp
+                    Ask Compatibility
                   </a>
                 </Button>
               </div>
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {[
+                  { title: "Verified fit", desc: "We match by model and case size." },
+                  { title: "Warranty help", desc: "Guidance on brand warranties." },
+                  { title: "Same-day pickup", desc: "Reserve on WhatsApp." },
+                ].map((item) => (
+                  <div key={item.title} className="rounded-2xl border border-border/60 bg-background/70 p-4 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">{item.title}</p>
+                    <p className="mt-2 text-sm text-foreground/80">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              {[Smartphone, Package, Zap, Headset].map((Icon, i) => (
-                <div
-                  key={i}
-                  className="aspect-square bg-white/5 rounded-[2rem] flex items-center justify-center p-8 backdrop-blur-sm border border-white/10 group-hover:bg-white/10 transition-colors"
-                >
-                  <Icon className="h-12 w-12 opacity-30 group-hover:opacity-60 transition-opacity" />
+
+            <div className="relative">
+              <div className="rounded-[2.75rem] border border-border/60 bg-gradient-to-br from-background/90 via-background/70 to-secondary/60 p-6 shadow-[0_24px_90px_-60px_rgba(15,23,42,0.6)] md:p-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Popular picks</p>
+                    <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl" style={headingFont}>
+                      Essentials in stock
+                    </h2>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
                 </div>
-              ))}
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {categories.map((cat) => (
+                    <div key={cat.name} className="rounded-2xl border border-border/60 bg-background/80 p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                          <cat.icon className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">{cat.name}</p>
+                          <p className="text-xs text-muted-foreground">{cat.desc}</p>
+                        </div>
+                      </div>
+                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+                        {cat.price}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="pb-16 md:pb-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              { icon: ShieldCheck, title: "Genuine products", desc: "We stock trusted, warranty-friendly brands." },
+              { icon: Package, title: "Quick pickup", desc: "Reserve and collect in minutes." },
+              { icon: Headphones, title: "Sound tested", desc: "Audio accessories tested in store." },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-[2.5rem] border border-border/60 bg-background/80 p-8 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                  <item.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground" style={headingFont}>
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-24 md:pb-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="relative overflow-hidden rounded-[3rem] border border-border/60 bg-gradient-to-br from-background via-background to-emerald-500/10 p-10 text-center shadow-xl md:p-16">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.14),transparent_55%)]" />
+            <div className="relative">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Custom bundle</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-foreground md:text-4xl" style={headingFont}>
+                Tell us your phone model, we will build the kit
+              </h2>
+              <p className="mt-4 text-base text-muted-foreground md:text-lg">
+                Chargers, cables, cases, and screen protection matched to your device and budget.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button
+                  size="lg"
+                  className="h-14 rounded-full px-10 text-xs font-semibold uppercase tracking-[0.2em]"
+                  asChild
+                >
+                  <a href="https://wa.me/919878157109" target="_blank" rel="noopener noreferrer">
+                    Request Bundle
+                  </a>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-14 rounded-full px-10 text-xs font-semibold uppercase tracking-[0.2em]"
+                  asChild
+                >
+                  <a href="tel:+919878157109">Call the Store</a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

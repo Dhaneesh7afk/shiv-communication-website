@@ -3,16 +3,30 @@ import mongoose from "mongoose"
 const MONGODB_URI = process.env.MONGODB_URI as string
 
 if (!MONGODB_URI) {
-  throw new Error("❌ MONGODB_URI not defined in .env.local")
+  throw new Error("MONGODB_URI not defined in .env.local")
+}
+
+// Global cache (important for Next.js)
+let cached = (global as any).mongoose
+
+if (!cached) {
+  cached = (global as any).mongoose = {
+    conn: null,
+    promise: null,
+  }
 }
 
 export async function connectDB() {
-  if (mongoose.connection.readyState >= 1) return
-
-  try {
-    await mongoose.connect(MONGODB_URI)
-    console.log("✅ MongoDB connected")
-  } catch (err) {
-    console.error("❌ MongoDB connection failed", err)
+  if (cached.conn) {
+    return cached.conn
   }
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+    })
+  }
+
+  cached.conn = await cached.promise
+  return cached.conn
 }

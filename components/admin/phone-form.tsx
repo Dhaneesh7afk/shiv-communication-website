@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ interface UsedPhone {
   condition: string
   price: number
   image?: string
+  images?: string[]
   available: boolean
 }
 
@@ -38,7 +39,8 @@ export function PhoneForm({
   onCancel,
   isLoading,
 }: PhoneFormProps) {
-  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [previewUrls, setPreviewUrls] = useState<string[]>([])
 
   const { register, handleSubmit, setValue, watch } =
     useForm<Partial<UsedPhone>>({
@@ -65,34 +67,43 @@ export function PhoneForm({
     formData.append("price", String(data.price || 0))
     formData.append("available", String(data.available))
 
-    if (imageFile) {
-      formData.append("image", imageFile)
+    if (imageFiles.length) {
+      imageFiles.forEach((file) => formData.append("images", file))
     }
 
     onSubmit(formData)
   }
 
+  useEffect(() => {
+    if (imageFiles.length) {
+      const urls = imageFiles.map((file) => URL.createObjectURL(file))
+      setPreviewUrls(urls)
+      return () => urls.forEach((url) => URL.revokeObjectURL(url))
+    }
+    setPreviewUrls([])
+  }, [imageFiles])
+
   return (
-    <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
+    <form onSubmit={handleSubmit(submitHandler)} className="space-y-5">
       {/* Brand + Model */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="admin-surface-soft p-4 space-y-2">
           <Label>Brand</Label>
           <Input {...register("brand", { required: true })} placeholder="e.g. Apple" />
         </div>
-        <div className="space-y-2">
+        <div className="admin-surface-soft p-4 space-y-2">
           <Label>Model</Label>
           <Input {...register("model", { required: true })} placeholder="e.g. iPhone 15" />
         </div>
       </div>
 
       {/* Storage + Price */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="admin-surface-soft p-4 space-y-2">
           <Label>Storage</Label>
           <Input {...register("storage", { required: true })} placeholder="e.g. 128GB" />
         </div>
-        <div className="space-y-2">
+        <div className="admin-surface-soft p-4 space-y-2">
           <Label>Price (₹)</Label>
           <Input
             type="number"
@@ -102,7 +113,7 @@ export function PhoneForm({
       </div>
 
       {/* Condition */}
-      <div className="space-y-2">
+      <div className="admin-surface-soft p-4 space-y-2">
         <Label>Condition</Label>
         <Select
           value={condition}
@@ -122,26 +133,50 @@ export function PhoneForm({
       </div>
 
       {/* Image Upload */}
-      <div className="space-y-2">
-        <Label>Phone Image</Label>
+      <div className="admin-surface-soft p-4 space-y-2">
+        <Label>Phone Images</Label>
         <Input
           type="file"
           accept="image/*"
+          multiple
           onChange={(e) => {
-            if (e.target.files?.[0]) {
-              setImageFile(e.target.files[0])
+            if (e.target.files?.length) {
+              setImageFiles(Array.from(e.target.files))
             }
           }}
         />
+        {(previewUrls.length || phone?.images?.length || phone?.image) && (
+          <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-3">
+            {previewUrls.length > 0
+              ? previewUrls.map((url) => (
+                  <img
+                    key={url}
+                    src={url}
+                    alt="Phone preview"
+                    className="h-24 w-full rounded-2xl object-cover border"
+                  />
+                ))
+              : (phone?.images?.length ? phone.images : phone?.image ? [phone.image] : []).map((url) => (
+                  <img
+                    key={url}
+                    src={url}
+                    alt="Phone preview"
+                    className="h-24 w-full rounded-2xl object-cover border"
+                  />
+                ))}
+          </div>
+        )}
       </div>
 
       {/* Availability */}
-      <div className="flex items-center space-x-2">
+      <div className="admin-surface-soft flex items-center justify-between px-4 py-3">
+        <div>
+          <Label>Available for sale</Label>
+        </div>
         <Switch
           checked={available}
           onCheckedChange={(checked) => setValue("available", checked)}
         />
-        <Label>Available for sale</Label>
       </div>
 
       {/* Actions */}
@@ -151,10 +186,15 @@ export function PhoneForm({
           variant="outline"
           onClick={onCancel}
           disabled={isLoading}
+          className="rounded-full font-black tracking-wide text-xs admin-btn-outline"
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isLoading}>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="rounded-full font-black tracking-wide text-xs admin-btn-primary"
+        >
           {isLoading ? "Saving..." : phone ? "Update Phone" : "Add Phone"}
         </Button>
       </div>

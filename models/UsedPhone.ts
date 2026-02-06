@@ -28,9 +28,17 @@ const UsedPhoneSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    images: {
+      type: [String],
+      default: [],
+    },
     cloudinaryPublicId: {
      type: String,
      default: "",
+    },
+    cloudinaryPublicIds: {
+      type: [String],
+      default: [],
     },
 
     available: {
@@ -40,6 +48,11 @@ const UsedPhoneSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+const existingModel = mongoose.models.UsedPhone
+if (process.env.NODE_ENV !== "production" && existingModel) {
+  mongoose.deleteModel("UsedPhone")
+}
 
 export default mongoose.models.UsedPhone ||
   mongoose.model("UsedPhone", UsedPhoneSchema)

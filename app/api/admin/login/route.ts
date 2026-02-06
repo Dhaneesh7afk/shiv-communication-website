@@ -2,23 +2,31 @@ import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json()
+  const { password } = await req.json()
 
-  if (
-    email === process.env.ADMIN_EMAIL &&
-    password === process.env.ADMIN_PASSWORD
-  ) {
-    const cookieStore = await cookies()
-    cookieStore.set("admin-token", process.env.ADMIN_SECRET!, {
-      httpOnly: true,
-      path: "/",
-    })
-
-    return NextResponse.json({ success: true })
+  if (!process.env.ADMIN_PASSWORD) {
+    console.error("ADMIN_PASSWORD missing")
+    return NextResponse.json(
+      { error: "Server misconfigured" },
+      { status: 500 }
+    )
   }
 
-  return NextResponse.json(
-    { error: "Invalid credentials" },
-    { status: 401 }
-  )
+  if (password !== process.env.ADMIN_PASSWORD) {
+    return NextResponse.json(
+      { error: "Invalid password" },
+      { status: 401 }
+    )
+  }
+
+  // ...existing code...
+  // replace cookies().set(...) + return with:
+  const res = NextResponse.json({ success: true })
+  res.cookies.set("admin-token", password, {
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax",
+  })
+  return res
+// ...existing code...
 }
