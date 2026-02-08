@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import ImageCarousel from "@/components/product/ImageCarousel"
 import AddToCartButton from "@/components/cart/AddToCartButton"
 import BuyNowButton from "@/components/BuyNowButton"
+import { getBaseUrl } from "@/lib/site-url"
 
 interface Product {
   title: string
@@ -30,7 +31,8 @@ const bodyFont = Instrument_Sans({
 })
 
 async function getProduct(slug: string): Promise<Product | null> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/slug/${slug}`, { cache: "no-store" })
+  const baseUrl = getBaseUrl()
+  const res = await fetch(new URL(`/api/products/slug/${slug}`, baseUrl), { cache: "no-store" })
 
   if (!res.ok) return null
   return res.json()
@@ -43,7 +45,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/slug/${slug}`, { cache: "no-store" })
+  const baseUrl = getBaseUrl()
+  const res = await fetch(new URL(`/api/products/slug/${slug}`, baseUrl), { cache: "no-store" })
 
   if (!res.ok) {
     return {
